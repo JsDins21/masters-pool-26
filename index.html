@@ -542,7 +542,7 @@
 
   <!-- RULES NOTE -->
   <div class="rules-note">
-    <strong>Rules:</strong> Team with the tournament winner wins $125. Team with the lowest overall score $125. Missed cut players receive <strong>cut score + 5 strokes</strong>. Tap a team to see player details.
+    <strong>Rules:</strong> Team with the tournament winner wins $125. Team with the lowest overall score wins $125. Missed cut players receive <strong>cut score + 5 strokes</strong>. Tap a team to see player details.
   </div>
 
   <!-- LEADERBOARD -->
@@ -580,9 +580,7 @@ const TEAMS = [
   { name: "Chase",   players: ["Justin Rose","Robert MacIntyre","Jacob Bridgeman","Nicolai Højgaard"] }
 ];
 
-// Tournament starts Thursday April 10 2026 at 8am ET
-const TOURNAMENT_START = new Date('2026-04-10T08:00:00-04:00');
-const FETCH_INTERVAL_MS = 5 * 60 * 1000;
+const FETCH_INTERVAL_MS = 20 * 60 * 1000;
 
 let liveScores = {};
 let cutScore = null;
@@ -705,25 +703,7 @@ function render() {
   });
 }
 
-function isTournamentLive() {
-  return new Date() >= TOURNAMENT_START;
-}
-
-function setPreTournamentUI() {
-  const dot = document.querySelector('.live-dot');
-  dot.style.background = '#c9a84c';
-  dot.style.animation = 'none';
-  document.getElementById("status-text").innerHTML = `Tournament begins <strong>Thursday, April 10</strong> · Scores will load automatically`;
-  document.getElementById("round-label").textContent = "Preview";
-  render();
-}
-
 async function loadScores() {
-  if (!isTournamentLive()) {
-    setPreTournamentUI();
-    return;
-  }
-
   document.getElementById("status-text").innerHTML = `Updating scores...`;
 
   try {
@@ -737,7 +717,7 @@ async function loadScores() {
         messages: [{
           role: "user",
           content: `Search for current 2026 Masters Tournament live leaderboard scores right now. Return ONLY a raw JSON object (absolutely no markdown, no backticks, no explanation) with this structure:
-{"round":"R1","cutScore":null,"tourneyLeader":"Name","tourneyLeaderScore":-5,"lastUpdated":"2:30 ET","players":{"Scottie Scheffler":{"score":-3,"thru":"F","madeCut":true},"Brooks Koepka":{"score":1,"thru":"12","madeCut":true},"Russell Henley":{"score":0,"thru":"F","madeCut":true},"Bryson DeChambeau":{"score":-2,"thru":"F","madeCut":true},"Chris Gotterup":{"score":2,"thru":"F","madeCut":true},"Akshay Bhatia":{"score":-1,"thru":"F","madeCut":true},"Rory McIlroy":{"score":-4,"thru":"F","madeCut":true},"Jordan Spieth":{"score":1,"thru":"F","madeCut":true},"Corey Conners":{"score":3,"thru":"F","madeCut":true},"John Rahm":{"score":0,"thru":"F","madeCut":true},"Viktor Hovland":{"score":-1,"thru":"F","madeCut":true},"Cameron Smith":{"score":2,"thru":"F","madeCut":true},"Xander Schauffele":{"score":-3,"thru":"F","madeCut":true},"Justin Thomas":{"score":1,"thru":"F","madeCut":true},"Jake Knapp":{"score":4,"thru":"F","madeCut":true},"Ludvig Åberg":{"score":-2,"thru":"F","madeCut":true},"Min Woo Lee":{"score":0,"thru":"F","madeCut":true},"Matt Fitzpatrick":{"score":1,"thru":"F","madeCut":true},"Patrick Reed":{"score":2,"thru":"F","madeCut":true},"Cameron Young":{"score":-1,"thru":"F","madeCut":true},"Collin Morikawa":{"score":-2,"thru":"F","madeCut":true},"Tommy Fleetwood":{"score":0,"thru":"F","madeCut":true},"Hideki Matsuyama":{"score":-3,"thru":"F","madeCut":true},"Justin Rose":{"score":3,"thru":"F","madeCut":true},"Robert MacIntyre":{"score":1,"thru":"F","madeCut":true}}}`
+{"round":"R1","cutScore":null,"tourneyLeader":"Name","tourneyLeaderScore":-5,"lastUpdated":"2:30 ET","players":{"Scottie Scheffler":{"score":-3,"thru":"F","madeCut":true},"Brooks Koepka":{"score":1,"thru":"12","madeCut":true},"Russell Henley":{"score":0,"thru":"F","madeCut":true},"Gary Woodland":{"score":2,"thru":"F","madeCut":true},"Bryson DeChambeau":{"score":-2,"thru":"F","madeCut":true},"Chris Gotterup":{"score":2,"thru":"F","madeCut":true},"Akshay Bhatia":{"score":-1,"thru":"F","madeCut":true},"Ryan Fox":{"score":1,"thru":"F","madeCut":true},"Rory McIlroy":{"score":-4,"thru":"F","madeCut":true},"Jordan Spieth":{"score":1,"thru":"F","madeCut":true},"Corey Conners":{"score":3,"thru":"F","madeCut":true},"Sungjae Im":{"score":0,"thru":"F","madeCut":true},"John Rahm":{"score":0,"thru":"F","madeCut":true},"Viktor Hovland":{"score":-1,"thru":"F","madeCut":true},"Cameron Smith":{"score":2,"thru":"F","madeCut":true},"Sepp Straka":{"score":1,"thru":"F","madeCut":true},"Xander Schauffele":{"score":-3,"thru":"F","madeCut":true},"Justin Thomas":{"score":1,"thru":"F","madeCut":true},"Jake Knapp":{"score":4,"thru":"F","madeCut":true},"Sam Burns":{"score":0,"thru":"F","madeCut":true},"Ludvig Åberg":{"score":-2,"thru":"F","madeCut":true},"Min Woo Lee":{"score":0,"thru":"F","madeCut":true},"Shane Lowry":{"score":1,"thru":"F","madeCut":true},"Jason Day":{"score":2,"thru":"F","madeCut":true},"Matt Fitzpatrick":{"score":1,"thru":"F","madeCut":true},"Patrick Reed":{"score":2,"thru":"F","madeCut":true},"Kim Si Woo":{"score":0,"thru":"F","madeCut":true},"Maverick McNealy":{"score":3,"thru":"F","madeCut":true},"Cameron Young":{"score":-1,"thru":"F","madeCut":true},"Collin Morikawa":{"score":-2,"thru":"F","madeCut":true},"Patrick Cantlay":{"score":1,"thru":"F","madeCut":true},"Tyrell Hatton":{"score":0,"thru":"F","madeCut":true},"Tommy Fleetwood":{"score":0,"thru":"F","madeCut":true},"Hideki Matsuyama":{"score":-3,"thru":"F","madeCut":true},"Adam Scott":{"score":2,"thru":"F","madeCut":true},"JJ Spaun":{"score":1,"thru":"F","madeCut":true},"Justin Rose":{"score":3,"thru":"F","madeCut":true},"Robert MacIntyre":{"score":1,"thru":"F","madeCut":true},"Jacob Bridgeman":{"score":0,"thru":"F","madeCut":true},"Nicolai Højgaard":{"score":2,"thru":"F","madeCut":true}}}`
         }]
       })
     });
@@ -765,17 +745,8 @@ async function loadScores() {
   render();
 }
 
-function scheduleFetches() {
-  loadScores();
-
-  setInterval(() => {
-    if (isTournamentLive()) {
-      loadScores();
-    }
-  }, FETCH_INTERVAL_MS);
-}
-
-scheduleFetches();
+loadScores();
+setInterval(loadScores, FETCH_INTERVAL_MS);
 </script>
 </body>
 </html>
