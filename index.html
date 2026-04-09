@@ -542,7 +542,7 @@
 
   <!-- RULES NOTE -->
   <div class="rules-note">
-    <strong>Rules:</strong> Team with the tournament winner wins $125. Team with the lowest overall score wins $125. Missed cut players receive <strong>cut score + 5 strokes</strong>. Tap a team to see player details.
+    <strong>Rules:</strong> Team with the tournament winner wins $125. Team with the lowest overall score $125. Missed cut players receive <strong>cut score + 5 strokes</strong>. Tap a team to see player details.
   </div>
 
   <!-- LEADERBOARD -->
@@ -568,21 +568,21 @@
 
 <script>
 const TEAMS = [
-  { name: "Lars",    players: ["Scottie Scheffler","Brooks Koepka","Russell Henley","TBD"] },
-  { name: "Joe",     players: ["Bryson DeChambeau","Chris Gotterup","Akshay Bhatia","TBD"] },
-  { name: "Jake",    players: ["Rory McIlroy","Jordan Spieth","Corey Conners","TBD"] },
-  { name: "Jack",    players: ["John Rahm","Viktor Hovland","Cameron Smith","TBD"] },
-  { name: "Jamie",   players: ["Xander Schauffele","Justin Thomas","Jake Knapp","TBD"] },
-  { name: "Brendan", players: ["Ludvig Åberg","Min Woo Lee","TBD","TBD"] },
-  { name: "Davy",    players: ["Matt Fitzpatrick","Patrick Reed","TBD","TBD"] },
-  { name: "Parker",  players: ["Cameron Young","Collin Morikawa","TBD","TBD"] },
-  { name: "Ansel",   players: ["Tommy Fleetwood","Hideki Matsuyama","TBD","TBD"] },
-  { name: "Chase",   players: ["Justin Rose","Robert MacIntyre","TBD","TBD"] }
+  { name: "Lars",    players: ["Scottie Scheffler","Brooks Koepka","Russell Henley","Gary Woodland"] },
+  { name: "Joe",     players: ["Bryson DeChambeau","Chris Gotterup","Akshay Bhatia","Ryan Fox"] },
+  { name: "Jake",    players: ["Rory McIlroy","Jordan Spieth","Corey Conners","Sungjae Im"] },
+  { name: "Jack",    players: ["John Rahm","Viktor Hovland","Cameron Smith","Sepp Straka"] },
+  { name: "Jamie",   players: ["Xander Schauffele","Justin Thomas","Jake Knapp","Sam Burns"] },
+  { name: "Brendan", players: ["Ludvig Åberg","Min Woo Lee","Shane Lowry","Jason Day"] },
+  { name: "Davy",    players: ["Matt Fitzpatrick","Patrick Reed","Kim Si Woo","Maverick McNealy"] },
+  { name: "Parker",  players: ["Cameron Young","Collin Morikawa","Patrick Cantlay","Tyrell Hatton"] },
+  { name: "Ansel",   players: ["Tommy Fleetwood","Hideki Matsuyama","Adam Scott","JJ Spaun"] },
+  { name: "Chase",   players: ["Justin Rose","Robert MacIntyre","Jacob Bridgeman","Nicolai Højgaard"] }
 ];
 
 // Tournament starts Thursday April 10 2026 at 8am ET
 const TOURNAMENT_START = new Date('2026-04-10T08:00:00-04:00');
-const FETCH_INTERVAL_MS = 15 * 60 * 1000;
+const FETCH_INTERVAL_MS = 5 * 60 * 1000;
 
 let liveScores = {};
 let cutScore = null;
