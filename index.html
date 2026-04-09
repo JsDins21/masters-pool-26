@@ -708,20 +708,22 @@ function render() {
     lb.appendChild(row);
   });
 }
-
+ 
 async function loadScores() {
   document.getElementById("status-text").innerHTML = `Updating scores...`;
 
   try {
-    // 1. Paste your Google Apps Script Web App URL here
-    const MIDDLEMAN_URL = "https://script.google.com/macros/s/AKfycbyJFKmkRHDV1nWCEhsojsWJ2YehhmSBrCULi8PtW5a37kTaF0pfUW_NHKqLl-IwX6FnuQ/exec"; 
+    // Paste your NEW Google Apps Script Web App URL here
+    const MIDDLEMAN_URL = "YOUR_NEW_WEB_APP_URL_HERE"; 
     
-    // 2. Fetch the data from your script, NOT Gemini directly
     const resp = await fetch(MIDDLEMAN_URL);
-    const data = await resp.json();
+    // Since the Apps script already cleaned it up, 'data' is our finished object!
+    const parsed = await resp.json();
     
-    // 3. Parse the data just like we did before
-    const parsed = JSON.parse(data.candidates[0].content.parts[0].text);
+    // Check if the API passed an error through
+    if (parsed.error) {
+       throw new Error(parsed.error.message);
+    }
 
     liveScores = parsed.players || {};
     cutScore = parsed.cutScore !== undefined ? parsed.cutScore : null;
