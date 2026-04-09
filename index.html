@@ -713,32 +713,14 @@ async function loadScores() {
   document.getElementById("status-text").innerHTML = `Updating scores...`;
 
   try {
-    // Paste your free API key from Google AI Studio here
-    const GEMINI_API_KEY = ""; 
+    // 1. Paste your Google Apps Script Web App URL here
+    const MIDDLEMAN_URL = "https://script.google.com/macros/s/AKfycbyJFKmkRHDV1nWCEhsojsWJ2YehhmSBrCULi8PtW5a37kTaF0pfUW_NHKqLl-IwX6FnuQ/exec"; 
     
-    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{
-          role: "user",
-          parts: [{ 
-            text: `Search for current 2026 Masters Tournament live leaderboard scores right now. Return ONLY a raw JSON object with this structure:
-{"round":"R1","cutScore":null,"tourneyLeader":"Name","tourneyLeaderScore":-5,"lastUpdated":"2:30 ET","players":{"Scottie Scheffler":{"score":-3,"thru":"F","madeCut":true},"Brooks Koepka":{"score":1,"thru":"12","madeCut":true},"Russell Henley":{"score":0,"thru":"F","madeCut":true},"Gary Woodland":{"score":2,"thru":"F","madeCut":true},"Bryson DeChambeau":{"score":-2,"thru":"F","madeCut":true},"Chris Gotterup":{"score":2,"thru":"F","madeCut":true},"Akshay Bhatia":{"score":-1,"thru":"F","madeCut":true},"Ryan Fox":{"score":1,"thru":"F","madeCut":true},"Rory McIlroy":{"score":-4,"thru":"F","madeCut":true},"Jordan Spieth":{"score":1,"thru":"F","madeCut":true},"Corey Conners":{"score":3,"thru":"F","madeCut":true},"Sungjae Im":{"score":0,"thru":"F","madeCut":true},"John Rahm":{"score":0,"thru":"F","madeCut":true},"Viktor Hovland":{"score":-1,"thru":"F","madeCut":true},"Cameron Smith":{"score":2,"thru":"F","madeCut":true},"Sepp Straka":{"score":1,"thru":"F","madeCut":true},"Xander Schauffele":{"score":-3,"thru":"F","madeCut":true},"Justin Thomas":{"score":1,"thru":"F","madeCut":true},"Jake Knapp":{"score":4,"thru":"F","madeCut":true},"Sam Burns":{"score":0,"thru":"F","madeCut":true},"Ludvig Åberg":{"score":-2,"thru":"F","madeCut":true},"Min Woo Lee":{"score":0,"thru":"F","madeCut":true},"Shane Lowry":{"score":1,"thru":"F","madeCut":true},"Jason Day":{"score":2,"thru":"F","madeCut":true},"Matt Fitzpatrick":{"score":1,"thru":"F","madeCut":true},"Patrick Reed":{"score":2,"thru":"F","madeCut":true},"Kim Si Woo":{"score":0,"thru":"F","madeCut":true},"Maverick McNealy":{"score":3,"thru":"F","madeCut":true},"Cameron Young":{"score":-1,"thru":"F","madeCut":true},"Collin Morikawa":{"score":-2,"thru":"F","madeCut":true},"Patrick Cantlay":{"score":1,"thru":"F","madeCut":true},"Tyrell Hatton":{"score":0,"thru":"F","madeCut":true},"Tommy Fleetwood":{"score":0,"thru":"F","madeCut":true},"Hideki Matsuyama":{"score":-3,"thru":"F","madeCut":true},"Adam Scott":{"score":2,"thru":"F","madeCut":true},"JJ Spaun":{"score":1,"thru":"F","madeCut":true},"Justin Rose":{"score":3,"thru":"F","madeCut":true},"Robert MacIntyre":{"score":1,"thru":"F","madeCut":true},"Jacob Bridgeman":{"score":0,"thru":"F","madeCut":true},"Nicolai Højgaard":{"score":2,"thru":"F","madeCut":true}}}` 
-          }]
-        }],
-        tools: [{ googleSearch: {} }],
-        generationConfig: {
-          // This forces Gemini to natively output clean JSON
-          responseMimeType: "application/json" 
-        }
-      })
-    });
-
+    // 2. Fetch the data from your script, NOT Gemini directly
+    const resp = await fetch(MIDDLEMAN_URL);
     const data = await resp.json();
     
-    // With responseMimeType, we don't need the regex matching anymore.
-    // We can parse the text directly into our object.
+    // 3. Parse the data just like we did before
     const parsed = JSON.parse(data.candidates[0].content.parts[0].text);
 
     liveScores = parsed.players || {};
